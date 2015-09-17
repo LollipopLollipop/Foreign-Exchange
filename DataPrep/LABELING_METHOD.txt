@@ -1,0 +1,20 @@
+For each record in the output file, it contains 5 features and 1 label:
+#1 feature: currencyPair 
+	At current stage, only one currencyPair is supported but it can be extended to support multiple currencyPairs in the future.
+
+#2 feature: time 
+	In String format, time feature represents the time this transaction record happened and is precise to minute in this case. Namely, time frame is set to one minute. 
+
+#3 feature: high BID price
+	The highest bid price of that currencyPair in the particular time frame (minute frame).
+
+#4 feature: low BID price
+	The lowest bid price of that currencyPair in the particular time frame.
+
+#5 feature: close BID price
+	The last bid price traded in that particular time frame. 
+
+label: indicates the variation of close bid price at next time frame
+	1: rise
+	-1: drop
+	0: no change 
