@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Preped-USDJPY-2015-08.csv&apos; to &apos;DecisionTree&apos;&#x0A;- Original project: &apos;DataPrep&apos;&#x0A;- Destination element: &apos;DecisionTree&apos;&#x0A;- Original element: &apos;Preped-USDJPY-2015-08.csv&apos;" description="Copy file" destination="=DecisionTree" element1="Preped-USDJPY-2015-08.csv" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1443475514107" units="0" version="1.0"/>
+</session>

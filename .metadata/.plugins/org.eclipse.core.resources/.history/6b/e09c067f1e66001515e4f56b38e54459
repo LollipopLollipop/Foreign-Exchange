@@ -1,0 +1,197 @@
+import java.io.*;
+import java.util.*;
+
+public class DecisionTree {
+	private DTNode root;
+	private HashSet<String> attributes = new HashSet<String>();
+	
+	public DecisionTree(ArrayList<CandleStick> allTrainingInstances){
+		this.root.addInstances(allTrainingInstances);
+		this.attributes = new HashSet<String>(allTrainingInstances.get(0).getFeatures());
+	}
+	public void train(){
+		train();
+	}
+	
+	private DTNode train(ArrayList<CandleStick> instances, DTNode curRoot){
+		//leaf node
+		if(curRoot.setEntropy()==0)
+			return curRoot;
+		String bestAttr = null;
+		double bestIG = Double.MIN_VALUE;
+		ArrayList<CandleStick> leftInstances = new ArrayList<CandleStick>();
+		ArrayList<CandleStick> rightInstances = new ArrayList<CandleStick>();
+		//loop through attributes to find the best split
+		for(String attribute : this.attributes){
+			ArrayList<Double> vals = new ArrayList<Double>();
+			for(CandleStick ins : instances){
+				vals.add(ins.getFeatureVal(attribute));
+			}
+			Collections.sort(vals);
+			double threshold = vals.get(vals.size()/2);
+			ArrayList<CandleStick> left = new ArrayList<CandleStick>();
+			ArrayList<CandleStick> right = new ArrayList<CandleStick>();
+			for(CandleStick ins : instances){
+				if(ins.getFeatureVal(attribute)>=threshold)
+					right.add(ins);
+				else
+					left.add(ins);
+			}
+			
+			double leftEntropy = calcEntropy(left);
+			double rightEntropy = calcEntropy(right);
+			double infoGain = curRoot.getEntropy() - 
+					((double)left.size()/instances.size())*leftEntropy - 
+					((double)right.size()/instances.size())*rightEntropy;
+			if(infoGain>bestIG){
+				bestIG = infoGain;
+				bestAttr = attribute;
+				leftInstances = left;
+				rightInstances = right;
+			}
+		}
+		
+		this.attributes.remove(bestAttr);
+		curRoot.setTestCondition(bestAttr);
+		DTNode leftBranch = new DTNode();
+		leftBranch.addInstances(leftInstances);
+		DTNode rightBranch = new DTNode();
+		rightBranch.addInstances(rightInstances);
+		curRoot.setLeft(new DTNode());
+		curRoot.setRight(new DTNode());
+		
+	}
+	
+	public class DTNode{
+		private ArrayList<CandleStick> instances;
+		private double entropy;
+		private DTNode left;
+		private DTNode right;
+		
+		public DTNode(){
+			
+		}
+		private void addInstances(ArrayList<CandleStick> instances){
+			this.instances = instances;
+		}
+		private double setEntropy(){
+			this.entropy = calcEntropy(this.instances);
+			return this.entropy;
+		}
+		private double getEntropy(){
+			return this.entropy;
+		}
+		private void setLeft(DTNode n){
+			this.left = n;
+		}
+		private void setRight(DTNode n){
+			this.right = n;
+		}
+		private void setTestCondition(String c){
+			this.
+		}
+		
+	}
+	
+	private double calcEntropy(ArrayList<CandleStick> sampleInstances){
+		int n = sampleInstances.size();
+		int riseCount = 0;
+		int dropCount = 0;
+		int constantCount = 0;
+		for(CandleStick instance : sampleInstances){
+			if(instance.getLabel()==1)
+				riseCount++;
+			else if(instance.getLabel()==-1)
+				dropCount++;
+			else
+				constantCount++;
+		}
+		double riseProb = ((double)riseCount)/n;
+		double dropProb = ((double)dropCount)/n;
+		double constantProb = ((double)constantCount)/n;
+		
+		double entropy = -riseProb*Math.log(riseProb)-dropProb*Math.log(dropProb)
+				-constantProb*Math.log(constantProb);
+		return entropy;
+	}
+
+	
+//	public Node buildTree(ArrayList<Record> records, Node root, LearningSet learningSet) {
+//		int bestAttribute = -1;
+//		double bestGain = 0;
+//		root.setEntropy(Entropy.calculateEntropy(root.getData()));
+//		
+//		if(root.getEntropy() == 0) {
+//			return root;
+//		}
+//		
+//		for(int i = 0; i < Hw1.NUM_ATTRS - 2; i++) {
+//			if(!Hw1.isAttributeUsed(i)) {
+//				double entropy = 0;
+//				ArrayList<Double> entropies = new ArrayList<Double>();
+//				ArrayList<Integer> setSizes = new ArrayList<Integer>();
+//				
+//				for(int j = 0; j < Hw1.NUM_ATTRS - 2; j++) {
+//					ArrayList<Record> subset = subset(root, i, j);
+//					setSizes.add(subset.size());
+//					
+//					if(subset.size() != 0) {
+//						entropy = Entropy.calculateEntropy(subset);
+//						entropies.add(entropy);
+//					}
+//				}
+//				
+//				double gain = Entropy.calculateGain(root.getEntropy(), entropies, setSizes, root.getData().size());
+//				
+//				if(gain > bestGain) {
+//					bestAttribute = i;
+//					bestGain = gain;
+//				}
+//			}
+//		}
+	
+//		if(bestAttribute != -1) {
+//			int setSize = Hw1.setSize(Hw1.attrMap.get(bestAttribute));
+//			root.setTestAttribute(new DiscreteAttribute(Hw1.attrMap.get(bestAttribute), 0));
+//			root.children = new Node[setSize];
+//			root.setUsed(true);
+//			Hw1.usedAttributes.add(bestAttribute);
+//			
+//			for (int j = 0; j< setSize; j++) {
+//				root.children[j] = new Node();
+//				root.children[j].setParent(root);
+//				root.children[j].setData(subset(root, bestAttribute, j));
+//				root.children[j].getTestAttribute().setName(Hw1.getLeafNames(bestAttribute, j));
+//				root.children[j].getTestAttribute().setValue(j);
+//			}
+//
+//			for (int j = 0; j < setSize; j++) {
+//				buildTree(root.children[j].getData(), root.children[j], learningSet);
+//			}
+//
+//			root.setData(null);
+//		}
+//		else {
+//			return root;
+//		}
+//		
+//		return root;
+//	}
+//	
+//	public ArrayList<Record> subset(Node root, int attr, int value) {
+//		ArrayList<Record> subset = new ArrayList<Record>();
+//		
+//		for(int i = 0; i < root.getData().size(); i++) {
+//			Record record = root.getData().get(i);
+//			
+//			if(record.getAttributes().get(attr).getValue() == value) {
+//				subset.add(record);
+//			}
+//		}
+//		return subset;
+//	}
+//	
+//	public double calculateSurrogates(ArrayList<Record> records) {
+//		return 0;
+//	}
+}

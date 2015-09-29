@@ -1,0 +1,21 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String a = "20150815 090034";
+		Double d = Double.parseDouble(a);
+		System.out.println(d);
+		
+		ArrayList<String> aa = new ArrayList<String>();
+		aa.add("20150803 0988");
+		aa.add("20150804 0988");
+		aa.add("20150803 09880033");
+		Collections.sort( aa);
+	}
+
+}
