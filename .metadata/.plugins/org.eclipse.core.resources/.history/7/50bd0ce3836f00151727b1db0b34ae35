@@ -1,0 +1,39 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+
+public class RandomForest {
+	private int N = 0;
+	private List<Integer> totalFeatures = Arrays.asList(0, 1, 2, 3);
+	private ArrayList<DecisionTree> trees = new ArrayList<DecisionTree>();
+	public RandomForest(int N){
+		this.N = N;
+	}
+	public void buildForest(ArrayList<CandleStick> instances) {
+		int TOTAL_INSTANCES = instances.size();
+		for(int i=0; i<this.N; i++){
+			Collections.shuffle(instances);
+			ArrayList<CandleStick> trainInstances = 
+					new ArrayList<CandleStick>(instances.subList(0, (int) (2*TOTAL_INSTANCES/3)));
+			ArrayList<CandleStick> testInstances = 
+					new ArrayList<CandleStick>(instances.subList((int) (2*TOTAL_INSTANCES/3), TOTAL_INSTANCES));
+			
+			Collections.shuffle(totalFeatures);
+			List<Integer> usedFeatures = totalFeatures.subList(0, 2);
+			//System.out.println(trainingInstances.size());
+			DecisionTree dt = new DecisionTree(trainInstances, usedFeatures);
+			//build the tree
+			dt.train();
+			//dt.printAll();
+			//System.out.println(testingInstances.size());
+			//predict labels for testing instances based on the d-tree
+			ArrayList<Integer> predictedLabels = dt.classify(testInstances);
+			//get the performance stats
+			int matchCount = 0;
+			
+		}
+		
+	}
+}

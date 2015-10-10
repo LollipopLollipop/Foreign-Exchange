@@ -1,0 +1,7 @@
+
+public class RandomForest {
+	private int treeNum = 0;
+	public RandomForest(int N){
+		this.treeNum = N;
+	}
+}
