@@ -1,0 +1,13 @@
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Session;
+
+
+public class Cassandra {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Cluster cluster;
+		Session session;
+	}
+
+}

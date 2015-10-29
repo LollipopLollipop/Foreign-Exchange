@@ -1,7 +1,0 @@
-
-public class RandomForest {
-	private int N = 0;
-	public RandomForest(int N){
-		this.treeNum = N;
-	}
-}

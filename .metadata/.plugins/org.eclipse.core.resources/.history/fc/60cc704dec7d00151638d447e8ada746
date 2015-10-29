@@ -1,0 +1,23 @@
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Session;
+
+
+public class Cassandra {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Cluster cluster;
+		Session session;
+		
+		// Connect to the cluster and keyspace "demo"
+		cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
+		session = cluster.connect("dev");
+		
+		
+		// Insert one record into the users table
+		session.execute("insert into emp (empid, emp_first, emp_last, emp_dept) VALUES ('Jones', 35, 'Austin', 'bob@example.com', 'Bob')");
+		
+		
+	}
+
+}

@@ -1,0 +1,75 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Row;
+import com.datastax.driver.core.Session;
+/**
+ * 
+ * @author ding
+ * Main workflow of HW4: 
+ * load prep-ed data from csv to Cassandra (can be skipped next time)
+ * load training dataset from Cassandra
+ * build the random forest based on training set
+ * classify testing set, analyze predicted accuracy and store result into Cassandra
+ */
+
+public class HW4 {
+
+	public static void main(String[] args) {
+		Cluster cluster;
+		Session session;
+		
+		// Connect to the cluster and keyspace "demo"
+		cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
+		session = cluster.connect("dev");
+		
+		//load csv
+		try {
+			//use buffered reader and writer for fast IO
+			BufferedReader br = new BufferedReader(new FileReader(args[0]));
+			String thisLine = null;
+			
+			while ((thisLine = br.readLine()) != null) {
+				StringTokenizer featureTokenizer = new StringTokenizer(thisLine, ",");
+				String[] featuresNLabel = new String[6];
+				int i=0;
+				while(featureTokenizer.hasMoreTokens()){
+					featuresNLabel[i++] = featureTokenizer.nextToken();
+				}
+				// Insert one record into the users table
+				session.execute("insert into forex (time, currency_pair, high_bid, low_bid, close_bid, label) "
+						+ "values ('"+featuresNLabel[1]+"','"+featuresNLabel[0]+"',"+
+						Double.parseDouble(featuresNLabel[2])+","+
+						Double.parseDouble(featuresNLabel[3])+","+
+						Double.parseDouble(featuresNLabel[4])+","+
+						Integer.parseInt(featuresNLabel[5])+")");				
+			}
+		}catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		// Use select to get the user we just entered
+//		ResultSet results = session.execute("SELECT * FROM emp");
+//		for (Row row : results) {
+//			System.out.format("%s %s\n", row.getString("emp_first"), row.getString("emp_last"));
+//		}
+		
+		// Clean up the connection by closing it
+		cluster.close();
+		
+	}
+
+}

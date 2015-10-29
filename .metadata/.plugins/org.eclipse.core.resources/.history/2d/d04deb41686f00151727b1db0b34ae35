@@ -1,9 +1,0 @@
-import java.util.ArrayList;
-
-
-public class RandomForest {
-	private int N = 0;
-	public RandomForest(ArrayList<CandleStick> allTrainingInstances, int N){
-		this.N = N;
-	}
-}
