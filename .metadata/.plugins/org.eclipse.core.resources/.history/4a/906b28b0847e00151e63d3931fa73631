@@ -84,7 +84,7 @@ public class HW4 {
 		}
 		
 		//N specifies the number of trees to grow
-		int N = Integer.parseInt(args[1]);
+		int N = Integer.parseInt(args[0]);
 		//System.out.println("N value is " + N);
 		RandomForest rf = new RandomForest(N);
 		rf.buildForest(trainingInstances);

@@ -15,4 +15,8 @@
 <fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="java.util.Map.Entry"/>
+<fullyQualifiedTypeName name="com.datastax.driver.core.Cluster"/>
+<fullyQualifiedTypeName name="com.datastax.driver.core.Session"/>
+<fullyQualifiedTypeName name="com.datastax.driver.core.ResultSet"/>
+<fullyQualifiedTypeName name="com.datastax.driver.core.Row"/>
 </qualifiedTypeNameHistroy>

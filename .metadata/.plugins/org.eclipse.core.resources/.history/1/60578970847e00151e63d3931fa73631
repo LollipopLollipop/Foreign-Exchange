@@ -84,7 +84,7 @@ public class HW4 {
 		}
 		
 		//N specifies the number of trees to grow
-		int N = Integer.parseInt(args[1]);
+		int N = Integer.parseInt(args[0]);
 		//System.out.println("N value is " + N);
 		RandomForest rf = new RandomForest(N);
 		rf.buildForest(trainingInstances);
@@ -100,7 +100,7 @@ public class HW4 {
 		double precision = (double)matchCount/2000;
 		//store prediction result and random forest info into Cassandra 
 		//rfid is given by command line params
-		session.execute("INSERT INTO randforest (rfid, trees, stats, n, precision) VALUES ("+rfid+", '"+
+		session.execute("INSERT INTO randforest (rfid, trees, stats, n, precision) VALUES ("+0, '"+
 				rf.toString(0)+"', '"+rf.toString(1)+"',"+N+","+precision+")");
 		
 		// Clean up the connection by closing it
