@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="/Users/JodiezZ/Desktop/11676/HW/Foreign-Exchange/Cassandra/cassandra-java-driver-2.0.2/lib" key="org.eclipse.jdt.ui.lastextjar"/>
+	<item value="/Users/JodiezZ/Desktop/11676/HW/Foreign-Exchange/MRRandonForest/hadoop-1.2.1/lib" key="org.eclipse.jdt.ui.lastextjar"/>
 	<section name="RefactoringWizard.preview">
 		<item value="600" key="width"/>
 		<item value="400" key="height"/>
